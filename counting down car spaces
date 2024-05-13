@@ -1,0 +1,78 @@
+
+const int pinLight1 = A1;
+const int pinLight2 = A2; // New light sensor pin
+const int pinLed1 = 7;
+const int pinLed2 = 8; // New LED pin
+
+const int colorR = 255;
+const int colorG = 0;
+const int colorB = 0;
+
+// Defines the light-sensor threshold value below which the LED will turn on.
+// Decrease this value to make the device more sensitive to ambient light, or vice-versa.
+int thresholdvalue = 400;
+int carSpaces = 2;
+
+#include <Wire.h>
+#include "rgb_lcd.h"
+
+rgb_lcd lcd;
+
+void setup() {
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  // set colour using RGB to the LCD
+  lcd.setRGB(colorR, colorG, colorB);
+  // Print a message to the LCD.
+  lcd.print(carSpaces);
+  delay(1000);
+}
+
+void loop() {
+  // Read the value of the light sensor 1
+  int sensorValue1 = analogRead(pinLight1);
+  // Read the value of the light sensor 2
+  int sensorValue2 = analogRead(pinLight2);
+
+  // Turn the LED 1 on if the sensor value 1 is above the threshold
+  if (sensorValue1 > thresholdvalue) {
+    digitalWrite(pinLed1, HIGH);
+    // RGB backgroundcolour changes to green as it starts counting
+    carSpaces-1; // Increment carSpaces
+    lcd.begin(16, 2);
+    // set colour using RGB to the LCD
+    lcd.setRGB(colorR, colorG, colorB);
+    // Print a message to the LCD.
+    lcd.print(carSpaces);
+    delay(1000);
+  } else {
+    digitalWrite(pinLed1, LOW);
+    lcd.begin(16, 2);
+    // set colour using RGB to the LCD
+    lcd.setRGB(colorR, colorG, colorB);
+    // Print a message to the LCD.
+    lcd.print(carSpaces);
+    delay(1000);
+  }
+
+  // Turn the LED 2 on if the sensor value 2 is above the threshold
+  if (sensorValue2 > thresholdvalue) {
+    digitalWrite(pinLed2, HIGH);
+    // RGB backgroundcolour changes to green as it starts counting
+    carSpaces-1; // Increment carSpaces
+    lcd.begin(16, 2);
+    // set colour using RGB to the LCD
+    lcd.setRGB(colorR, colorG, colorB);
+    // Print a message to the LCD.
+    lcd.print(carSpaces);
+    delay(1000);
+  } else {
+    digitalWrite(pinLed2, LOW);
+    lcd.begin(16, 2);
+    // set colour using RGB to the LCD
+    lcd.setRGB(colorR, colorG, colorB);
+    // Print a message to the LCD.
+    lcd.print(carSpaces);
+    delay(1000);
+  }
+}
